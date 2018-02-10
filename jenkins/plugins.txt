@@ -1,0 +1,3 @@
+cloudbees-bitbucket-branch-source:2.2.9
+bitbucket-scm-trait-commit-skip:0.1.1
+pegdown-formatter:1.3

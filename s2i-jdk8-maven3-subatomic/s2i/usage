@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cat <<EOF
+Subatomic S2I image
+EOF
