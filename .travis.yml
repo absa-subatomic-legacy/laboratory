@@ -1,0 +1,7 @@
+services:
+  - docker
+
+script:
+  - docker build jenkins
+  - docker build jenkins-slave/maven
+  - docker build s2i-jdk8-maven3-subatomic
