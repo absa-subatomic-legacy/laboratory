@@ -1,0 +1,43 @@
+/**
+* Jenkins pipeline to build a library.
+*
+* This pipeline requires the following credentials:
+* ---
+* Type          | ID                | Description
+* Secret text   | nexus-base-url    | The Nexus instance base URL. E.g. https://nexus.subatomic.local/content/repositories/
+* Secret file   | maven-settings    | Maven settings.xml
+*
+*/
+node('maven') {
+
+    stage('Checks and Tests') {
+        checkout(scm)
+
+        try {
+            sh ': Maven build && ./mvnw --batch-mode verify'
+        } finally {
+            junit 'target/surefire-reports/*.xml'
+        }
+    }
+
+    if (env.BRANCH_NAME == 'master' || !env.BRANCH_NAME) {
+        stage('Publish to Nexus') {
+
+            // adjust the Nexus repository based whether this is a release artifact or not
+            repository = 'releases'
+            pom = readMavenPom file: 'pom.xml'
+            if (pom.version.endsWith('SNAPSHOT')) {
+                repository = 'snapshots'
+            }
+
+            withCredentials([
+                    string(credentialsId: 'nexus-base-url', variable: 'NEXUS_BASE_URL'),
+                    file(credentialsId: 'maven-settings', variable: 'MVN_SETTINGS'),
+            ]) {
+                sh ': Maven deploy && ./mvnw --batch-mode deploy -DskipTests ' +
+                        "-DaltDeploymentRepository=nexus::default::${env.NEXUS_BASE_URL}/${repository}/ " +
+                        '--settings $MVN_SETTINGS'
+            }
+        }
+    }
+}
