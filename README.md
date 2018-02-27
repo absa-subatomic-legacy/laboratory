@@ -22,4 +22,4 @@ RUN yum install -y git \
 
 Provision has been made to add additional root CA certificates to images based off the various Subatomic images. Simply create a `certs` directory at the same level as the custom `Dockerfile` and copy all the root CA certificates you'd like to additionally trust into that directory.
 
-When you build your custom image using your `Dockerile`, the [`OBNBUILD`](https://docs.docker.com/engine/reference/builder/#/onbuild) instruction will add and update the trusted CA certificates.
+When you build your custom image using your `Dockerile`, the [`OBNBUILD`](https://docs.docker.com/engine/reference/builder/#/onbuild) instruction will [add and update](https://github.com/absa-subatomic/laboratory/blob/f9cb385886898ceefe82f72544a8620168b3fa9f/s2i-jdk8-maven3-subatomic/Dockerfile#L121) the trusted CA certificates.
