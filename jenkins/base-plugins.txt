@@ -6,7 +6,7 @@ openshift-client:1.0.7
 kubernetes:1.3.1
 
 # fabric8 openshift sync
-openshift-sync:1.0.4
+openshift-sync:1.0.6
 
 # Pipeline plugin - https://wiki.jenkins-ci.org/display/JENKINS/Pipeline+Plugin
 # 2.5 now includes pipeline-model-definition (declaritive pipeline)
@@ -29,7 +29,7 @@ mapdb-api:1.0.9.0
 
 # Updates
 credentials:2.1.16
-git:3.7.0
+git:3.8.0
 job-dsl:1.68
 jira:2.5
 blueocean-display-url:2.2.0
@@ -41,7 +41,7 @@ workflow-cps-global-lib:2.9
 pipeline-stage-view:2.9
 pipeline-stage-step:2.3
 workflow-durable-task-step:2.19
-workflow-api:2.25
+workflow-api:2.26
 workflow-support:2.18
 apache-httpcomponents-client-4-api:4.5.3-2.1
 authentication-tokens:1.3
@@ -58,7 +58,7 @@ jackson2-api:2.8.11.1
 ace-editor:1.1
 handlebars:1.1.1
 momentjs:1.1.1
-mercurial:2.2
+mercurial:2.3
 metrics:3.1.2.10
 parameterized-trigger:2.35.2
 workflow-remote-loader:1.4
@@ -71,7 +71,7 @@ pipeline-stage-tags-metadata:1.2.7
 plain-credentials:1.4
 run-condition:1.0
 script-security:1.41
-subversion:2.10.2
+subversion:2.10.3
 token-macro:2.3
 maven-plugin:3.1
 javadoc:1.4
