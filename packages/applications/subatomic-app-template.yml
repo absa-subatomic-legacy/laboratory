@@ -15,7 +15,6 @@ metadata:
     tags: java
     iconClass: icon-spring
 labels:
-  app: ${APP_NAME}
   template: subatomic-app-template
 objects:
   - kind: ImageStream
