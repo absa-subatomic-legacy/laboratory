@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Template
 labels:
-  app: jenkins-persistent-subatomic
+  app: subatomic-jenkins
   template: jenkins-persistent-subatomic-template
 metadata:
   annotations:

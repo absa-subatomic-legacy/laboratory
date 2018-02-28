@@ -1,0 +1,163 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: subatomic-config-server-template
+  annotations:
+    openshift.io/display-name: Subatomic Config Server Template
+    description: |-
+      Subatomic Config Server template.
+      
+      NOTE: This Template requires a Config Map and a Secret named 'subatomic-config-server' containing the remote Git backend details (https://goo.gl/dXSTk2).
+    openshift.io/provider-display-name: Subatomic
+    openshift.io/documentation-url: http://subatomic.bison.ninja/configserver
+    openshift.io/support-url: https://github.com/absa-subatomic/subatomic-config-server
+    subatomic/version: '2.0'
+    tags: java
+    iconClass: icon-spring
+labels:
+  app: subatomic-config-server
+  template: subatomic-config-server-template
+objects:
+  - apiVersion: v1
+    kind: DeploymentConfig
+    metadata:
+      labels:
+        template: subatomic-config-server-template
+      name: subatomic-config-server
+    spec:
+      replicas: 1    
+      strategy:
+        type: Rolling    
+      triggers:
+        - imageChangeParams:
+            automatic: true
+            containerNames:
+              - subatomic-config-server
+            from:
+              kind: ImageStreamTag
+              name: subatomic-config-server:${IMAGE_STREAM_TAG}
+              namespace: ${IMAGE_STREAM_PROJECT}
+          type: ImageChange
+        - type: ConfigChange    
+      selector:
+        name: subatomic-config-server      
+      template:
+        metadata:
+          labels:
+            name: subatomic-config-server
+        spec:
+          containers:
+            - name: subatomic-config-server
+              image: ' ' 
+              env:
+                - name: SPRING_CLOUD_CONFIG_SERVER_GIT_URI
+                  value: "${GIT_URI}"
+                - name: SPRING_CLOUD_KUBERNETES_SECRETS_PATHS
+                  value: /subatomic-config-server/secrets
+                - name: SPRING_CLOUD_KUBERNETES_CONFIG_PATHS
+                  value: /subatomic-config-server/configs
+                - name: JAVA_MAX_CORE
+                  value: ${LIMITS_CPU}
+                - name: JAVA_OPTIONS
+                  value: '-Djava.net.preferIPv4Stack=true -Djava.security.egd=file:/dev/./urandom -javaagent:/newrelic/newrelic.jar -Dnewrelic.config.file=/newrelic/newrelic.yml'
+              ports:
+                - name: http-8888
+                  containerPort: 8888
+                  protocol: TCP
+              livenessProbe:
+                httpGet:
+                  path: ${ACTUATOR_CONTEXT_PATH}/health
+                  port: http-8888
+                  scheme: HTTP
+                initialDelaySeconds: 30
+              readinessProbe:
+                failureThreshold: 3
+                httpGet:
+                  path: ${ACTUATOR_CONTEXT_PATH}/info
+                  port: http-8888
+                  scheme: HTTP
+              resources:
+                limits:
+                  cpu: ${LIMITS_CPU}
+                  memory: ${LIMITS_MEMORY}
+                requests:
+                  cpu: ${REQUESTS_CPU}
+                  memory: ${REQUESTS_MEMORY}
+              volumeMounts:
+                - mountPath: /subatomic-config-server/configs
+                  name: subatomic-config-server-configs
+                  readOnly: true
+                - mountPath: /subatomic-config-server/secrets
+                  name: subatomic-config-server-secrets
+                  readOnly: true                  
+          volumes:
+            - name: subatomic-config-server-configs
+              configMap:
+                defaultMode: 420
+                name: subatomic-config-server
+            - name: subatomic-config-server-secrets
+              secret:
+                defaultMode: 420
+                secretName: subatomic-config-server                    
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: subatomic-config-server
+    spec:
+      ports:
+        - name: web
+          port: 80
+          protocol: TCP
+          targetPort: 8888
+      selector:
+        name: subatomic-config-server             
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: subatomic-config-server-8888
+    spec:
+      ports:
+        - name: web
+          port: 8888
+          protocol: TCP
+          targetPort: 8888
+      selector:
+        name: subatomic-config-server                        
+parameters:     
+  - name: GIT_URI
+    displayName: Remote Git repository URI
+    description: >-
+      The remote Git URI of the configuration repository that will be cloned locally as a Git backend
+    required: true        
+  - name: IMAGE_STREAM_PROJECT
+    displayName: OpenShift project
+    description: >-
+      The OpenShift project (namespace) where the application's ImageStream is located
+    required: true        
+  - name: IMAGE_STREAM_TAG
+    displayName: Image stream tag
+    value: latest
+    required: true        
+  - name: ACTUATOR_CONTEXT_PATH
+    displayName: Spring Boot actuator context path
+    description: >-
+      The context path for the Spring Boot actuator. Typically applications using 
+      Spring Boot 1.x would have a context path of '/' or '/management' and
+      Spring Boot 2.x would have a path of '/actuator'
+    required: false   
+  - name: REQUESTS_CPU
+    displayName: CPU resource request
+    required: false
+    value: '0'    
+  - name: REQUESTS_MEMORY
+    displayName: Memory resource request
+    required: true
+    value: 0Mi  
+  - name: LIMITS_CPU
+    displayName: CPU resource limit
+    required: true
+    value: '4'
+  - name: LIMITS_MEMORY
+    displayName: Memory resource limit
+    required: false
+    value: 512Mi
