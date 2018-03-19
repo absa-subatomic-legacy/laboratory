@@ -22,9 +22,9 @@ COPY configuration/users/admin/admin-config.xml.tpl /opt/openshift/configuration
 
 USER 1001
 
-# Allow adding root CA certificates for custom builds
-ONBUILD USER root
-# Copying the Dockerfile prevents failing on non existent additional certificates (see https://goo.gl/EVBRMg)
-ONBUILD ADD certs/* Dockerfile /etc/pki/ca-trust/source/anchors/
-ONBUILD RUN update-ca-trust
-ONBUILD USER 1001
+# # Allow adding root CA certificates for custom builds
+# ONBUILD USER root
+# # Copying the Dockerfile prevents failing on non existent additional certificates (see https://goo.gl/EVBRMg)
+# ONBUILD ADD certs/* Dockerfile /etc/pki/ca-trust/source/anchors/
+# ONBUILD RUN update-ca-trust
+# ONBUILD USER 1001
