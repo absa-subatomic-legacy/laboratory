@@ -91,13 +91,13 @@ objects:
               httpGet:
                 path: /login
                 port: 8080
-              initialDelaySeconds: 420
+              initialDelaySeconds: 30
               timeoutSeconds: 3
             readinessProbe:
               httpGet:
                 path: /login
                 port: 8080
-              initialDelaySeconds: 3
+              initialDelaySeconds: 30
               timeoutSeconds: 3
             resources:
               limits:

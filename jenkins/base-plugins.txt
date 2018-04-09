@@ -1,13 +1,17 @@
 openshift-pipeline:1.0.54
-openshift-login:1.0.7
-openshift-client:1.0.8
+openshift-login:1.0.8
+
+# Pinning to 1.0.7 until https://github.com/openshift/jenkins-client-plugin/issues/130#issuecomment-379741649 is resolved
+# See Dockerfile:25 for workaround
+#openshift-client:1.0.9
+openshift-client:1.0.7
 
 # kubernetes plugin - https://wiki.jenkins-ci.org/display/JENKINS/Kubernetes+Plugin
-kubernetes:1.4
+kubernetes:1.5.1
 kubernetes-credentials:0.3.1
 
 # fabric8 openshift sync
-openshift-sync:1.0.9
+openshift-sync:1.0.10
 
 # Pipeline plugin - https://wiki.jenkins-ci.org/display/JENKINS/Pipeline+Plugin
 # 2.5 now includes pipeline-model-definition (declaritive pipeline)
@@ -19,7 +23,7 @@ matrix-project:1.12
 credentials-binding:1.16
 
 # Pipeline Utility Steps Plugin - https://wiki.jenkins-ci.org/display/JENKINS/Pipeline+Utility+Steps+Plugin
-pipeline-utility-steps:2.0.1
+pipeline-utility-steps:2.0.2
 
 # Jenkins v2 specific
 matrix-auth:2.2
@@ -35,11 +39,11 @@ job-dsl:1.68
 jira:2.5
 blueocean-display-url:2.2.0
 cloudbees-folder:6.4
-workflow-job:2.17
-workflow-cps:2.45
+workflow-job:2.18
+workflow-cps:2.47
 workflow-multibranch:2.17
 workflow-cps-global-lib:2.9
-pipeline-stage-view:2.9
+pipeline-stage-view:2.10
 pipeline-stage-step:2.3
 workflow-durable-task-step:2.19
 workflow-api:2.26
@@ -65,18 +69,22 @@ parameterized-trigger:2.35.2
 workflow-remote-loader:1.4
 workflow-basic-steps:2.6
 pipeline-build-step:2.7
-pipeline-model-definition:1.2.7
-pipeline-model-extensions:1.2.7
-pipeline-model-api:1.2.7
-pipeline-stage-tags-metadata:1.2.7
+pipeline-model-definition:1.2.8
+pipeline-model-extensions:1.2.8
+pipeline-model-api:1.2.8
+pipeline-stage-tags-metadata:1.2.8
 plain-credentials:1.4
 run-condition:1.0
-script-security:1.42
-subversion:2.10.4
-token-macro:2.3
-maven-plugin:3.1
+script-security:1.43
+subversion:2.10.5
+token-macro:2.4
+maven-plugin:3.1.2
 javadoc:1.4
 git-client:2.7.1
 jsch:0.1.54.2
 junit:1.24
 structs:1.14
+branch-api:2.0.19
+pipeline-rest-api:2.10
+htmlpublisher:1.15
+mailer:1.21
