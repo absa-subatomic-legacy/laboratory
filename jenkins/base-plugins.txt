@@ -1,17 +1,13 @@
 openshift-pipeline:1.0.54
 openshift-login:1.0.8
-
-# Pinning to 1.0.7 until https://github.com/openshift/jenkins-client-plugin/issues/130#issuecomment-379741649 is resolved
-# See Dockerfile:25 for workaround
-#openshift-client:1.0.9
-openshift-client:1.0.7
+openshift-client:1.0.10
 
 # kubernetes plugin - https://wiki.jenkins-ci.org/display/JENKINS/Kubernetes+Plugin
-kubernetes:1.5.1
+kubernetes:1.5.2
 kubernetes-credentials:0.3.1
 
 # fabric8 openshift sync
-openshift-sync:1.0.10
+openshift-sync:1.0.13
 
 # Pipeline plugin - https://wiki.jenkins-ci.org/display/JENKINS/Pipeline+Plugin
 # 2.5 now includes pipeline-model-definition (declaritive pipeline)
@@ -19,7 +15,7 @@ openshift-sync:1.0.10
 workflow-aggregator:2.5
 workflow-scm-step:2.6
 
-matrix-project:1.12
+matrix-project:1.13
 credentials-binding:1.16
 
 # Pipeline Utility Steps Plugin - https://wiki.jenkins-ci.org/display/JENKINS/Pipeline+Utility+Steps+Plugin
@@ -27,7 +23,7 @@ pipeline-utility-steps:2.0.2
 
 # Jenkins v2 specific
 matrix-auth:2.2
-blueocean:1.4.2
+blueocean:1.5.0
 
 # Legacy stuff
 mapdb-api:1.0.9.0
@@ -35,18 +31,18 @@ mapdb-api:1.0.9.0
 # Updates
 credentials:2.1.16
 git:3.8.0
-job-dsl:1.68
+job-dsl:1.69
 jira:2.5
 blueocean-display-url:2.2.0
 cloudbees-folder:6.4
-workflow-job:2.18
-workflow-cps:2.47
+workflow-job:2.19
+workflow-cps:2.48
 workflow-multibranch:2.17
 workflow-cps-global-lib:2.9
 pipeline-stage-view:2.10
 pipeline-stage-step:2.3
 workflow-durable-task-step:2.19
-workflow-api:2.26
+workflow-api:2.27
 workflow-support:2.18
 apache-httpcomponents-client-4-api:4.5.3-2.1
 authentication-tokens:1.3
@@ -77,7 +73,7 @@ plain-credentials:1.4
 run-condition:1.0
 script-security:1.43
 subversion:2.10.5
-token-macro:2.4
+token-macro:2.5
 maven-plugin:3.1.2
 javadoc:1.4
 git-client:2.7.1
@@ -86,5 +82,5 @@ junit:1.24
 structs:1.14
 branch-api:2.0.19
 pipeline-rest-api:2.10
-htmlpublisher:1.15
+htmlpublisher:1.16
 mailer:1.21
