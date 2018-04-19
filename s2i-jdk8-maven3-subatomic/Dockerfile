@@ -18,14 +18,15 @@ LABEL io.k8s.description="Subatomic S2I for building and running Java applicatio
 
 # See http://download.oracle.com/otn-pub/java/jdk/8u162-b12/0da788060d494f5095bf8624735fa2f1/jdk-8u162-linux-x64.tar.gz
 # JCE. See https://golb.hplar.ch/p/JCE-policy-changes-in-Java-SE-8u151-and-8u152
-ENV UPDATE_VERSION=8u162
-ENV JAVA_VERSION=1.8.0_162
-ENV BUILD=b12
+ENV UPDATE_VERSION=8u171
+ENV JAVA_VERSION=1.8.0_171
+ENV BUILD=b11
+ENV HASH 512cd62ec5174c3487ac17c61aaa89e8
 RUN yum -y update && \
   yum -y install wget && \
   wget -c --no-cookies --no-check-certificate \
   --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
-    "http://download.oracle.com/otn-pub/java/jdk/${UPDATE_VERSION}-${BUILD}/0da788060d494f5095bf8624735fa2f1/jdk-${UPDATE_VERSION}-linux-x64.rpm" \
+    "http://download.oracle.com/otn-pub/java/jdk/${UPDATE_VERSION}-${BUILD}/${HASH}/jdk-${UPDATE_VERSION}-linux-x64.rpm" \
   --output-document="jdk-${UPDATE_VERSION}-linux-x64.rpm" && \
   rpm -i jdk-${UPDATE_VERSION}-linux-x64.rpm && \
   alternatives --install /usr/bin/java java /usr/java/jdk${JAVA_VERSION}/bin/java 1 && \
