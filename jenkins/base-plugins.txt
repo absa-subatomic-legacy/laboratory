@@ -7,7 +7,7 @@ kubernetes:1.5.2
 kubernetes-credentials:0.3.1
 
 # fabric8 openshift sync
-openshift-sync:1.0.13
+openshift-sync:1.0.14
 
 # Pipeline plugin - https://wiki.jenkins-ci.org/display/JENKINS/Pipeline+Plugin
 # 2.5 now includes pipeline-model-definition (declaritive pipeline)
