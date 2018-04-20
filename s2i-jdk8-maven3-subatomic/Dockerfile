@@ -1,5 +1,5 @@
 # Heavily based off https://github.com/codecentric/springboot-maven3-centos
-FROM openshift/base-centos7
+FROM centos/s2i-base-centos7
 
 # Spring Boot Maven 3
 # ===
@@ -37,7 +37,7 @@ RUN yum -y update && \
   rm jdk-${UPDATE_VERSION}-linux-x64.rpm && \
   yum clean all && \
   rm -rf /var/cache/yum
-ENV JAVA_HOME=/usr/java/jdk${JAVA_VERSION}
+ENV JAVA_HOME=/usr/java/jdk${JAVA_VERSION}-amd64
 RUN echo $JAVA_HOME
 ENV PATH=$JAVA_HOME/bin:$PATH
 
