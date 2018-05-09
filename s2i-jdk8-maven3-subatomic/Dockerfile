@@ -9,10 +9,11 @@ LABEL io.k8s.description="Subatomic S2I for building and running Java applicatio
       io.k8s.display-name="Subatomic Oracle JDK with Maven 3" \
       io.openshift.expose-services="8080:http" \
       io.openshift.tags="builder,java,java8,maven,maven3" \
-      io.fabric8.s2i.version.jolokia="1.3.6.redhat-1" \
+      io.fabric8.s2i.version.jolokia="1.4.0.redhat-1" \
       io.fabric8.s2i.version.prometheus.jmx_exporter="0.10" \      
       io.openshift.s2i.scripts-url="image:///usr/local/s2i" \
       io.openshift.s2i.destination="/tmp" \      
+      io.openshift.s2i.version="s2i-core-rhel7:1-16" \      
       subatomic-version="2.0" \
       author="Subatomic <https://github.com/absa-subatomic>"
 
@@ -41,12 +42,15 @@ ENV JAVA_HOME=/usr/java/jdk${JAVA_VERSION}-amd64
 RUN echo $JAVA_HOME
 ENV PATH=$JAVA_HOME/bin:$PATH
 
-ENV MAVEN_VERSION 3.5.2
+ENV MAVEN_VERSION 3.5.3
 RUN curl -fsSL https://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar xzf - -C /usr/share \
   && mv /usr/share/apache-maven-$MAVEN_VERSION /usr/share/maven \
   && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 ENV MAVEN_HOME /usr/share/maven
-COPY settings.xml /usr/share/maven/conf/settings.xml
+ENV GLOBAL_MAVEN_SETTINGS /opt/app-root/src/.m2/
+COPY settings.xml ${GLOBAL_MAVEN_SETTINGS}/settings.xml
+# Thanks to https://www.lewuathe.com/maven-wrapper-home.html
+ENV MAVEN_USER_HOME /tmp
 # ===
 
 # Java S2I. See https://github.com/fabric8io-images/s2i/tree/master/java/images/rhel
@@ -67,7 +71,7 @@ EXPOSE 9779
 
 # Jolokia agent
 RUN mkdir -p /opt/jolokia/etc \
- && curl https://maven.repository.redhat.com/ga/org/jolokia/jolokia-jvm/1.3.6.redhat-1/jolokia-jvm-1.3.6.redhat-1-agent.jar \
+ && curl https://maven.repository.redhat.com/ga/org/jolokia/jolokia-jvm/1.4.0.redhat-1/jolokia-jvm-1.4.0.redhat-1-agent.jar \
          -o /opt/jolokia/jolokia.jar
 ADD jolokia-opts /opt/jolokia/jolokia-opts
 RUN chmod 444 /opt/jolokia/jolokia.jar \
