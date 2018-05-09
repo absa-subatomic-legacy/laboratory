@@ -8,8 +8,7 @@ USER root
 ADD https://raw.githubusercontent.com/absa-subatomic/local-hadron-collider/master/minishift-addons/subatomic/certs/subatomic-ca-chain.pem /etc/pki/ca-trust/source/anchors/subatomic-ca-chain.crt
 RUN update-ca-trust
 
-ENV GLOBAL_MAVEN_SETTINGS /opt/rh/rh-maven33/root/usr/share/maven/conf
-COPY settings.xml ${GLOBAL_MAVEN_SETTINGS}/settings.xml
+COPY settings.xml /opt/rh/rh-maven33/root/usr/share/maven/conf/settings.xml
 # Thanks to https://www.lewuathe.com/maven-wrapper-home.html
 ENV MAVEN_USER_HOME /tmp
 
