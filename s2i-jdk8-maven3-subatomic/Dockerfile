@@ -47,7 +47,8 @@ RUN curl -fsSL https://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/bina
   && mv /usr/share/apache-maven-$MAVEN_VERSION /usr/share/maven \
   && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
 ENV MAVEN_HOME /usr/share/maven
-COPY settings.xml /opt/app-root/src/.m2/settings.xml
+ENV GLOBAL_MAVEN_SETTINGS /opt/app-root/src/.m2/
+COPY settings.xml ${GLOBAL_MAVEN_SETTINGS}/settings.xml
 # Thanks to https://www.lewuathe.com/maven-wrapper-home.html
 ENV MAVEN_USER_HOME /tmp
 # ===
