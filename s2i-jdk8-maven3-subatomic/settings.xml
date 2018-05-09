@@ -12,8 +12,8 @@
     <mirrors>
         <mirror>
             <id>nexus-repository</id>
-            <name>Maven Repository Manager running on https://nexus.core.local</name>
-            <url>https://nexus.core.local/content/groups/public/</url>
+            <name>Maven Repository Manager running on https://nexus.subatomic.local</name>
+            <url>https://nexus.subatomic.local/content/groups/public/</url>
             <mirrorOf>external:*</mirrorOf>
         </mirror>
     </mirrors>    
