@@ -2,6 +2,8 @@ apiVersion: v1
 kind: Template
 metadata:
   name: subatomic-app-template
+  labels:
+    usage: "subatomic-app"
   annotations:
     openshift.io/display-name: Subatomic Application Template
     description: |-
