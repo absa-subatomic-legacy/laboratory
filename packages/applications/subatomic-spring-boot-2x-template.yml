@@ -5,7 +5,7 @@ metadata:
   labels:
     usage: "subatomic-app"
   annotations:
-    openshift.io/display-name: Subatomic Application Template
+    openshift.io/display-name: Subatomic Application 2 Template
     description: |-
       Simple Subatomic Spring Boot 2 application template.
       

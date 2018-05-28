@@ -1,0 +1,130 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  template: subatomic-nodejs-template
+metadata:
+  name: subatomic-nodejs-template
+  labels:
+    usage: "subatomic-app"
+  annotations:
+    description: Simple Node Js Template
+    iconClass: icon-nodejs
+    openshift.io/display-name: Subatomic Node Js Template
+    openshift.io/documentation-url: 'http://subatomic.bison.ninja'
+    openshift.io/provider-display-name: Subatomic
+    openshift.io/support-url: 'http://subatomic.bison.ninja'
+    subatomic/version: '2.0'
+    tags: 'nodejs,nginx'
+labels:
+  template: subatomic-nodejs-template
+objects:
+  - apiVersion: v1
+    kind: ImageStream
+    metadata:
+      name: '${APP_NAME}'
+  - apiVersion: v1
+    kind: DeploymentConfig
+    metadata:
+      name: '${APP_NAME}'
+    spec:
+      replicas: 1
+      selector:
+        name: '${APP_NAME}'
+      strategy:
+        type: Rolling
+      template:
+        metadata:
+          labels:
+            name: '${APP_NAME}'
+        spec:
+          containers:
+              image: ' '
+              livenessProbe:
+                httpGet:
+                  path: /status
+                  port: http-8080
+                  scheme: HTTP
+                initialDelaySeconds: 5
+              name: '${APP_NAME}'
+              ports:
+                - containerPort: 8080
+                  name: http-8080
+                  protocol: TCP
+              readinessProbe:
+                httpGet:
+                  path: /status
+                  port: http-8080
+                  scheme: HTTP
+                initialDelaySeconds: 5
+              resources:
+                limits:
+                  cpu: '${LIMITS_CPU}'
+                  memory: '${LIMITS_MEMORY}'
+                requests:
+                  cpu: '${REQUESTS_CPU}'
+                  memory: '${REQUESTS_MEMORY}'
+      triggers:
+        - imageChangeParams:
+            automatic: true
+            containerNames:
+              - '${APP_NAME}'
+            from:
+              kind: ImageStreamTag
+              name: '${APP_NAME}:${IMAGE_STREAM_TAG}'
+              namespace: '${IMAGE_STREAM_PROJECT}'
+          type: ImageChange
+        - type: ConfigChange
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        app: '${APP_NAME}'
+        template: subatomic-nodejs-template
+      name: '${APP_NAME}'
+    spec:
+      ports:
+        - name: web
+          port: 80
+          protocol: TCP
+          targetPort: http-8080
+      selector:
+        name: '${APP_NAME}'
+  - apiVersion: v1
+    kind: Route
+    metadata:
+      labels:
+        app: '${APP_NAME}'
+        template: subatomic-nodejs-template
+      name: '${APP_NAME}'
+    spec:
+      to:
+        kind: Service
+        name: '${APP_NAME}'
+parameters:
+  - displayName: Application name
+    name: APP_NAME
+    required: true
+  - description: >-
+      The OpenShift project (namespace) where the application's ImageStream is
+      located
+    displayName: OpenShift project
+    name: IMAGE_STREAM_PROJECT
+    required: true
+  - displayName: Image stream tag
+    name: IMAGE_STREAM_TAG
+    required: true
+    value: latest
+  - displayName: CPU resource request
+    name: REQUESTS_CPU
+    value: '0'
+  - displayName: Memory resource request
+    name: REQUESTS_MEMORY
+    required: true
+    value: 0Mi
+  - displayName: CPU resource limit
+    name: LIMITS_CPU
+    required: true
+    value: '1'
+  - displayName: Memory resource limit
+    name: LIMITS_MEMORY
+    value: 32Mi
