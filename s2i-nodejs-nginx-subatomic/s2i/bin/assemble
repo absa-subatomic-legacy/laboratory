@@ -1,0 +1,30 @@
+#!/bin/bash
+
+set -e
+
+# Restore artifacts from the previous build (if they exist).
+if [ "$(ls /tmp/artifacts/ 2>/dev/null)" ]; then
+  echo "---> Restoring build artifacts..."
+  mv /tmp/artifacts/. ./
+fi
+
+echo "---> Installing your NodeJS dependencies..."
+cp -Rf /tmp/src/. ./
+
+npm config set registry ${NPM_REGISTRY_URL}
+export NO_UPDATE_NOTIFIER=true
+
+if [[ -f yarn.lock ]]; then
+  yarn install
+else
+  npm install --no-update-notifier
+fi
+
+echo "---> Compiling your static assets..."
+if [[ -f yarn.lock ]]; then
+  yarn run ${NPM_BUILD_COMMAND}
+else
+  npm run ${NPM_BUILD_COMMAND} --no-update-notifier
+fi
+
+. $STI_SCRIPTS_PATH/assemble

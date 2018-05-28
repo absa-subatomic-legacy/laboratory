@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -e
+
+exec $STI_SCRIPTS_PATH/run
