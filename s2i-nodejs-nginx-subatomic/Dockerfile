@@ -1,4 +1,4 @@
-FROM centos/nodejs-8-centos7
+FROM centos/nginx-112-centos7
 
 EXPOSE 8080
 
@@ -27,6 +27,9 @@ LABEL io.k8s.description="Platform for building and running static sites with No
       io.openshift.s2i.scripts-url="image:///opt/app-root/s2i/bin"
 
 COPY contrib/bin/scl_enable /usr/local/bin/scl_enable      
+
+# Prevents "Cannot find a valid baseurl for repo" error
+RUN rm /etc/yum.repos.d/CentOS-Base.repo
 
 RUN yum-config-manager --enable rhel-server-rhscl-7-rpms && \    
     yum-config-manager --enable rhel-7-server-optional-rpms || : && \
