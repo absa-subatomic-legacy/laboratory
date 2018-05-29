@@ -55,13 +55,11 @@ RUN chown -R 1001:0 /opt/app-root && \
 
 # Subatomic
 # ===
-ADD https://raw.githubusercontent.com/absa-subatomic/local-hadron-collider/master/minishift-addons/subatomic/certs/subatomic-ca-chain.pem /etc/ca.cert.pem
-RUN keytool -importcert \
-  -file /etc/ca.cert.pem \
-  -alias subatomic.local \
-  -keystore $JAVA_HOME/jre/lib/security/cacerts \
-  -storepass changeit \
-  -noprompt
+ADD https://raw.githubusercontent.com/absa-subatomic/local-hadron-collider/master/minishift-addons/subatomic/certs/subatomic-ca-chain.pem /etc/pki/ca-trust/source/anchors/etc/ca.cert.pem
+ADD https://raw.githubusercontent.com/absa-subatomic/local-hadron-collider/master/minishift-addons/subatomic/certs/subatomic-ca-chain.pem /subatomic/certs/ca.cert.pem
+RUN update-ca-trust
+RUN scl enable rh-nodejs8 'npm config set -g cafile /subatomic/certs/ca.cert.pem' && \
+  chown -R 1001:0 /subatomic/certs/ca.cert.pem
 
 USER 1001
 
