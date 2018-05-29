@@ -53,6 +53,16 @@ ADD s2i/bin/run /opt/app-root/s2i/bin/
 RUN chown -R 1001:0 /opt/app-root && \
   chmod -R ug+rwx /opt/app-root/s2i/bin
 
+# Subatomic
+# ===
+ADD https://raw.githubusercontent.com/absa-subatomic/local-hadron-collider/master/minishift-addons/subatomic/certs/subatomic-ca-chain.pem /etc/ca.cert.pem
+RUN keytool -importcert \
+  -file /etc/ca.cert.pem \
+  -alias subatomic.local \
+  -keystore $JAVA_HOME/jre/lib/security/cacerts \
+  -storepass changeit \
+  -noprompt
+
 USER 1001
 
 # Set the default CMD to print the usage of the language image

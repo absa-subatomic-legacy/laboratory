@@ -1,7 +1,5 @@
 apiVersion: template.openshift.io/v1
 kind: Template
-labels:
-  template: subatomic-nodejs-template
 metadata:
   name: subatomic-nodejs-template
   labels:
@@ -25,6 +23,8 @@ objects:
   - apiVersion: v1
     kind: DeploymentConfig
     metadata:
+      labels:
+        template: subatomic-nodejs-template
       name: '${APP_NAME}'
     spec:
       replicas: 1
@@ -38,14 +38,14 @@ objects:
             name: '${APP_NAME}'
         spec:
           containers:
+            - name: '${APP_NAME}'
               image: ' '
               livenessProbe:
                 httpGet:
                   path: /status
                   port: http-8080
                   scheme: HTTP
-                initialDelaySeconds: 5
-              name: '${APP_NAME}'
+                initialDelaySeconds: 10
               ports:
                 - containerPort: 8080
                   name: http-8080
@@ -55,7 +55,7 @@ objects:
                   path: /status
                   port: http-8080
                   scheme: HTTP
-                initialDelaySeconds: 5
+                initialDelaySeconds: 10
               resources:
                 limits:
                   cpu: '${LIMITS_CPU}'
@@ -88,17 +88,6 @@ objects:
           protocol: TCP
           targetPort: http-8080
       selector:
-        name: '${APP_NAME}'
-  - apiVersion: v1
-    kind: Route
-    metadata:
-      labels:
-        app: '${APP_NAME}'
-        template: subatomic-nodejs-template
-      name: '${APP_NAME}'
-    spec:
-      to:
-        kind: Service
         name: '${APP_NAME}'
 parameters:
   - displayName: Application name
