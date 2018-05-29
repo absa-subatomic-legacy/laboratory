@@ -31,7 +31,6 @@ COPY contrib/bin/scl_enable /usr/local/bin/scl_enable
 RUN yum-config-manager --enable rhel-server-rhscl-7-rpms && \    
     yum-config-manager --enable rhel-7-server-optional-rpms || : && \
     INSTALL_PKGS="rh-nodejs8 rh-nodejs8-nodejs-nodemon" && \
-    ln -s /usr/lib/node_modules/nodemon/bin/nodemon.js /usr/bin/nodemon && \
     yum install -y --setopt=tsflags=nodocs --releasever=7.4 $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && rm -rf /var/cache/yum
