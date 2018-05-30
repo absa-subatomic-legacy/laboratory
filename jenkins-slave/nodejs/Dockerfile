@@ -19,6 +19,8 @@ RUN yum install -y centos-release-scl-rh && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && rm -rf /var/cache/yum       
 
+RUN scl enable rh-nodejs8 bash
+
 # Add Subatomic trusted Root CA's
 USER root
 ADD https://raw.githubusercontent.com/absa-subatomic/local-hadron-collider/master/minishift-addons/subatomic/certs/subatomic-ca-chain.pem /etc/pki/ca-trust/source/anchors/subatomic-ca-chain.crt
