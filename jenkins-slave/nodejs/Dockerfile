@@ -7,7 +7,12 @@ LABEL subatomic-version="2.0" \
 # Taken as is from https://github.com/openshift/jenkins/blob/openshift-3.9/slave-nodejs/Dockerfile\
 # Node version updated
 # See: https://github.com/absa-subatomic/laboratory/issues/19
-ENV NODEJS_VERSION=8.6.0
+ENV NODEJS_VERSION=8.6.0 \
+    BASH_ENV=/usr/local/bin/scl_enable \
+    ENV=/usr/local/bin/scl_enable \
+    PROMPT_COMMAND=". /usr/local/bin/scl_enable"
+
+COPY contrib/bin/scl_enable /usr/local/bin/scl_enable
 
 USER root
 RUN yum remove -y rh-nodejs4 rh-nodejs4-npm rh-nodejs4-nodejs-nodemon && \
@@ -25,9 +30,6 @@ ADD https://raw.githubusercontent.com/absa-subatomic/local-hadron-collider/maste
 RUN update-ca-trust
 
 USER 1001
-
-# Make sure the above SCLs are already enabled
-ENTRYPOINT ["scl", "enable", "rh-nodejs8", "bash"]
 
 # # Allow adding root CA certificates for custom builds
 # ONBUILD USER root
