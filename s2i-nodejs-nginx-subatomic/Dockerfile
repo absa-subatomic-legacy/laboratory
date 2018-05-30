@@ -5,15 +5,14 @@ EXPOSE 8080
 USER root
 
 ENV NPM_BUILD_COMMAND=build \
-    NODEJS_VERSION=8.10.0 \
+    NODEJS_VERSION=8.9.4 \
     NPM_CONFIG_LOGLEVEL=info \
     NPM_CONFIG_PREFIX=$HOME/.npm-global \
     PATH=$HOME/node_modules/.bin/:$HOME/.npm-global/bin/:$PATH \
     BASH_ENV=/usr/local/bin/scl_enable \
     ENV=/usr/local/bin/scl_enable \
     PROMPT_COMMAND=". /usr/local/bin/scl_enable" \
-    NPM_VERSION=5.10.0 \
-    YARN_VERSION=1.5.1 \
+    NPM_VERSION=5.6.0 \
     DEBUG_PORT=5858 \
     NODE_ENV=production \
     DEV_MODE=false \
@@ -28,15 +27,12 @@ LABEL io.k8s.description="Platform for building and running static sites with No
 
 COPY contrib/bin/scl_enable /usr/local/bin/scl_enable      
 
-# Prevents "Cannot find a valid baseurl for repo" error
-RUN rm /etc/yum.repos.d/CentOS-Base.repo
-
-RUN yum-config-manager --enable rhel-server-rhscl-7-rpms && \    
-    yum-config-manager --enable rhel-7-server-optional-rpms || : && \
-    INSTALL_PKGS="rh-nodejs8 rh-nodejs8-nodejs-nodemon" && \
-    yum install -y --setopt=tsflags=nodocs --releasever=7.4 $INSTALL_PKGS && \
+RUN yum install -y centos-release-scl-rh && \
+    INSTALL_PKGS="rh-nodejs8 rh-nodejs8-npm rh-nodejs8-nodejs-nodemon" && \
+    ln -s /usr/lib/node_modules/nodemon/bin/nodemon.js /usr/bin/nodemon && \
+    yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
-    yum clean all -y && rm -rf /var/cache/yum
+    yum clean all -y
 
 # Don't install Cypress - we won't run tests for S2I
 ENV CYPRESS_SKIP_BINARY_INSTALL=1
