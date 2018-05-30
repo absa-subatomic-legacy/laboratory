@@ -27,8 +27,7 @@ RUN update-ca-trust
 USER 1001
 
 # Make sure the above SCLs are already enabled
-ENTRYPOINT ["/usr/bin/scl", "enable", "rh-nodejs8"]
-CMD ["/usr/bin/scl", "enable", "rh-nodejs8"]
+ENTRYPOINT ["scl", "enable", "rh-nodejs8", "bash"]
 
 # # Allow adding root CA certificates for custom builds
 # ONBUILD USER root
