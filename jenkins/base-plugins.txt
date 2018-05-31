@@ -55,7 +55,7 @@ durable-task:1.22
 github-api:1.90
 github-branch-source:2.3.4
 github:1.29.0
-jackson2-api:2.8.11.1
+jackson2-api:2.8.11.2
 ace-editor:1.1
 handlebars:1.1.1
 momentjs:1.1.1
@@ -86,4 +86,3 @@ htmlpublisher:1.16
 mailer:1.21
 scm-api:2.2.7
 favorite:2.3.2
-jackson2-api:2.8.11.2
