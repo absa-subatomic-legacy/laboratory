@@ -109,16 +109,6 @@ ADD logback.xml /maven/config/logback.xml
 
 VOLUME /tmp
 
-RUN wget https://download.newrelic.com/newrelic/java-agent/newrelic-agent/current/newrelic-java.zip
-RUN unzip newrelic-java.zip -d /
-# Add a newrelic.yml template that allows envrionment variables to set values
-# seee https://docs.newrelic.com/docs/agents/java-agent/configuration/java-agent-configuration-config-file
-RUN mv /newrelic/newrelic.yml /newrelic/newrelic.yml.original
-ADD newrelic.yml /newrelic/newrelic.yml
-RUN mkdir -p /newrelic/logs/
-RUN chmod -R a+rwx /newrelic
-VOLUME /newrelic/logs/
-
 USER 1001
 
 # # Allow adding root CA certificates for custom builds
