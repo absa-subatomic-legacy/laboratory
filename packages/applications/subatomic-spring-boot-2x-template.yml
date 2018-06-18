@@ -53,8 +53,10 @@ objects:
         spec:
           containers:
             - name: ${APP_NAME}
-              image: ' ' 
+              image: ' '
               env:
+                - name: SPRING_CLOUD_CONFIG_URI
+                  value: "http://subatomic-config-server.${DEVOPS_NAMESPACE}.svc.cluster.local"
                 - name: JAVA_MAX_CORE
                   value: ${LIMITS_CPU}
                 - name: JAVA_OPTIONS
@@ -85,7 +87,10 @@ objects:
 parameters:
   - name: APP_NAME
     displayName: Application name
-    required: true        
+    required: true
+  - name: DEVOPS_NAMESPACE
+    displayName: DevOps Namespace
+    required: true
   - name: IMAGE_STREAM_PROJECT
     displayName: OpenShift project
     description: >-
