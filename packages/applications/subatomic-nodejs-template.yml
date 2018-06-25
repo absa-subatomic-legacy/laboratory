@@ -40,22 +40,10 @@ objects:
           containers:
             - name: '${APP_NAME}'
               image: ' '
-              livenessProbe:
-                httpGet:
-                  path: /status
-                  port: http-8080
-                  scheme: HTTP
-                initialDelaySeconds: 10
               ports:
                 - containerPort: 8080
                   name: http-8080
                   protocol: TCP
-              readinessProbe:
-                httpGet:
-                  path: /status
-                  port: http-8080
-                  scheme: HTTP
-                initialDelaySeconds: 10
               resources:
                 limits:
                   cpu: '${LIMITS_CPU}'
