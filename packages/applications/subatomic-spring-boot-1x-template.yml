@@ -83,7 +83,22 @@ objects:
                   memory: ${LIMITS_MEMORY}
                 requests:
                   cpu: ${REQUESTS_CPU}
-                  memory: ${REQUESTS_MEMORY}                  
+                  memory: ${REQUESTS_MEMORY}    
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        app: '${APP_NAME}'
+        template: subatomic-spring-boot-1x-template
+      name: '${APP_NAME}'
+    spec:
+      ports:
+        - name: web
+          port: 8080
+          protocol: TCP
+          targetPort: http-8080
+      selector:
+        name: '${APP_NAME}'              
 parameters:
   - name: APP_NAME
     displayName: Application name
@@ -122,4 +137,4 @@ parameters:
   - name: LIMITS_MEMORY
     displayName: Memory resource limit
     required: false
-    value: 512Mi
+    value: 1Gi
