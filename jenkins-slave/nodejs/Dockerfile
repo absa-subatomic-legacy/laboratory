@@ -36,10 +36,9 @@ gpgcheck=1\n\
 gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub" > /etc/yum.repos.d/google-chrome.repo && \ 
   yum install -y xorg-x11-server-Xvfb gtk2 GConf2 google-chrome-stable && \
   echo export PATH='$PATH:/opt/google/chrome' >> /etc/bashrc
-  
-RUN CYPRESS_BINARY_VERSION=https://cdn.cypress.io/desktop/2.1.0/linux64/cypress.zip && \
-    wget --quiet https://cdn.cypress.io/desktop/2.1.0/linux64/cypress.zip --directory-prefix=/home/jenkins
-ENV CYPRESS_BINARY_VERSION=/home/jenkins/cypress.zip
+
+RUN wget --quiet https://cdn.cypress.io/desktop/3.0.2/linux64/cypress.zip --directory-prefix=/home/jenkins
+ENV CYPRESS_INSTALL_BINARY=/home/jenkins/cypress.zip
 
 RUN wget --quiet https://github.com/sass/node-sass/releases/download/v4.9.0/linux-x64-57_binding.node --directory-prefix=/home/jenkins
 ENV SASS_BINARY_PATH=/home/jenkins/linux-x64-57_binding.node
