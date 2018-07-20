@@ -19,8 +19,8 @@ LABEL io.k8s.description="Subatomic S2I for building and running Java applicatio
 
 ENV UPDATE_VERSION=8u181
 ENV JAVA_VERSION=1.8.0_181
-ENV BUILD=b11
-ENV HASH 512cd62ec5174c3487ac17c61aaa89e8
+ENV BUILD=b13
+ENV HASH 96a7b8442fe848ef90c96a2fad6ed6d1
 RUN yum -y update && \
   yum -y install wget && \
   wget -c --no-cookies --no-check-certificate \
