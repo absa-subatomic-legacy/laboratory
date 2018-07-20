@@ -17,8 +17,8 @@ LABEL io.k8s.description="Subatomic S2I for building and running Java applicatio
       subatomic-version="2.0" \
       author="Subatomic <https://github.com/absa-subatomic>"
 
-ENV UPDATE_VERSION=8u171
-ENV JAVA_VERSION=1.8.0_171
+ENV UPDATE_VERSION=8u181
+ENV JAVA_VERSION=1.8.0_181
 ENV BUILD=b11
 ENV HASH 512cd62ec5174c3487ac17c61aaa89e8
 RUN yum -y update && \
