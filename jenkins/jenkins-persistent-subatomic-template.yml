@@ -14,7 +14,7 @@ metadata:
     openshift.io/documentation-url: https://subatomic.bison.ninja/teams/cicd
     openshift.io/provider-display-name: Subatomic
     openshift.io/support-url: https://subatomic.bison.ninja
-    subatomic/version: '2.0'
+    subatomic/version: '2.1'
     tags: jenkins
   name: jenkins-persistent-subatomic
 objects:
@@ -206,4 +206,4 @@ parameters:
 - description: Name of the ImageStreamTag to be used for the Jenkins image.
   displayName: Jenkins ImageStreamTag
   name: JENKINS_IMAGE_STREAM_TAG
-  value: jenkins-subatomic:2.0
+  value: jenkins-subatomic:2.1
