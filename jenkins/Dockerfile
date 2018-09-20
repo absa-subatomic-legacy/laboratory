@@ -1,10 +1,10 @@
-FROM openshift/jenkins-2-centos7:v3.9
+FROM openshift/jenkins-2-centos7:v3.10
 
 LABEL subatomic-version="2.0"
 
 # Add Subatomic trusted Root CA's
 USER root
-ADD https://raw.githubusercontent.com/absa-subatomic/local-hadron-collider/master/minishift-addons/subatomic/certs/subatomic-ca-chain.pem /etc/pki/ca-trust/source/anchors/subatomic-ca-chain.crt
+ADD https://raw.githubusercontent.com/absa-subatomic/local-hadron-collider/master/minishift-addons/subatomic/certs/subatomic.ca.crt /etc/pki/ca-trust/source/anchors/subatomic-ca-chain.crt
 RUN update-ca-trust
 
 # Remove Kube limits for slaves
@@ -12,10 +12,10 @@ RUN sed -i -e 's/resourceLimitCpu></resourceLimitCpu>0</g' /usr/local/bin/kube-s
     sed -i -e 's/resourceLimitMemory></resourceLimitMemory>0</g' /usr/local/bin/kube-slave-common.sh
 
 # Add base and addtional plugins
-COPY base-plugins.txt /opt/openshift/base-plugins.txt
-RUN /usr/local/bin/install-plugins.sh /opt/openshift/base-plugins.txt
-COPY plugins.txt /opt/openshift/configuration/plugins.txt
-RUN /usr/local/bin/install-plugins.sh /opt/openshift/configuration/plugins.txt
+# COPY base-plugins.txt /opt/openshift/base-plugins.txt
+# RUN /usr/local/bin/install-plugins.sh /opt/openshift/base-plugins.txt
+# COPY plugins.txt /opt/openshift/configuration/plugins.txt
+# RUN /usr/local/bin/install-plugins.sh /opt/openshift/configuration/plugins.txt
 
 # Remove the OpenShift sample Job
 RUN rm -rf /opt/openshift/configuration/jobs
