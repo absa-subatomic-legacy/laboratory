@@ -47,7 +47,7 @@ RUN chown -R 1001:0 $HOME && \
     chmod -R g+rw $HOME
 
 # Add Subatomic trusted Root CA's
-ADD https://raw.githubusercontent.com/absa-subatomic/local-hadron-collider/master/minishift-addons/subatomic/certs/subatomic-ca-chain.pem /etc/pki/ca-trust/source/anchors/subatomic-ca-chain.crt
+ADD https://raw.githubusercontent.com/absa-subatomic/local-hadron-collider/master/minishift-addons/subatomic/certs/subatomic.ca.crt /etc/pki/ca-trust/source/anchors/subatomic-ca-chain.crt
 RUN chown 1001:0 /etc/pki/ca-trust/source/anchors/subatomic-ca-chain.crt && \
     update-ca-trust
 
