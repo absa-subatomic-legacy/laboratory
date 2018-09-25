@@ -5,7 +5,7 @@ LABEL subatomic-version="2.0" \
 
 # Add Subatomic trusted Root CA's
 USER root
-ADD https://raw.githubusercontent.com/absa-subatomic/local-hadron-collider/master/minishift-addons/subatomic/certs/subatomic-ca-chain.pem /etc/pki/ca-trust/source/anchors/subatomic-ca-chain.crt
+ADD https://raw.githubusercontent.com/absa-subatomic/local-hadron-collider/master/minishift-addons/subatomic/certs/subatomic.ca.crt /etc/pki/ca-trust/source/anchors/subatomic-ca-chain.crt
 RUN update-ca-trust
 
 ENV GLOBAL_MAVEN_SETTINGS /opt/rh/rh-maven33/root/usr/share/maven/conf
