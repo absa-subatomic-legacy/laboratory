@@ -51,8 +51,8 @@ RUN chown -R 1001:0 /opt/app-root && \
 
 # Subatomic
 # ===
-ADD https://raw.githubusercontent.com/absa-subatomic/local-hadron-collider/master/minishift-addons/subatomic/certs/subatomic-ca-chain.pem /etc/pki/ca-trust/source/anchors/etc/ca.cert.pem
-ADD https://raw.githubusercontent.com/absa-subatomic/local-hadron-collider/master/minishift-addons/subatomic/certs/subatomic-ca-chain.pem /subatomic/certs/ca.cert.pem
+ADD https://raw.githubusercontent.com/absa-subatomic/local-hadron-collider/master/minishift-addons/subatomic/certs/subatomic.ca.crt /etc/pki/ca-trust/source/anchors/etc/ca.cert.pem
+ADD https://raw.githubusercontent.com/absa-subatomic/local-hadron-collider/master/minishift-addons/subatomic/certs/subatomic.ca.crt /subatomic/certs/ca.cert.pem
 RUN update-ca-trust
 RUN scl enable rh-nodejs8 'npm config set -g cafile /subatomic/certs/ca.cert.pem' && \
   chown -R 1001:0 /subatomic/certs/ca.cert.pem
