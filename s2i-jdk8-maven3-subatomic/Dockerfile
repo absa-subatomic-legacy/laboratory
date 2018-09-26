@@ -97,7 +97,7 @@ CMD [ "/usr/local/s2i/run" ]
 
 # Subatomic
 # ===
-ADD https://raw.githubusercontent.com/absa-subatomic/local-hadron-collider/master/minishift-addons/subatomic/certs/subatomic-ca-chain.pem /etc/ca.cert.pem
+ADD https://raw.githubusercontent.com/absa-subatomic/local-hadron-collider/master/minishift-addons/subatomic/certs/subatomic.ca.crt /etc/ca.cert.pem
 RUN keytool -importcert \
   -file /etc/ca.cert.pem \
   -alias subatomic.local \
