@@ -10,7 +10,10 @@ ENV PYTHON_VERSION=3.6 \
     PYTHONIOENCODING=UTF-8 \
     LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
-    PIP_NO_CACHE_DIR=off
+    PIP_NO_CACHE_DIR=off \ 
+    BASH_ENV=/usr/local/bin/scl_enable \
+    ENV=/usr/local/bin/scl_enable \
+    PROMPT_COMMAND=". /usr/local/bin/scl_enable"
 
 RUN INSTALL_PKGS="rh-python36 rh-python36-python-devel rh-python36-python-setuptools rh-python36-python-pip nss_wrapper \
         httpd24 httpd24-httpd-devel httpd24-mod_ssl httpd24-mod_auth_kerb httpd24-mod_ldap \
