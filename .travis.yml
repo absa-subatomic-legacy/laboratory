@@ -5,6 +5,7 @@ script:
   - docker build jenkins
   - docker build jenkins-slave/maven
   - docker build jenkins-slave/nodejs
+  - docker build jenkins-slave/python36
   - docker build s2i-jdk8-maven3-subatomic
   - docker build s2i-nodejs-nginx-subatomic
   - docker build s2i-python36-subatomic
