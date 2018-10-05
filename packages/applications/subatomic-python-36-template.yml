@@ -5,7 +5,7 @@ metadata:
   labels:
     usage: "subatomic-app"
   annotations:
-    openshift.io/display-name: Subatomic Maven Python 3.6 Application Template
+    openshift.io/display-name: Subatomic Python 3.6 Application Template
     description: |-
       Simple Subatomic Python 3.6 application template.
       
