@@ -1,0 +1,92 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: subatomic-python-36-template
+  labels:
+    usage: "subatomic-app"
+  annotations:
+    openshift.io/display-name: Subatomic Maven Python 3.6 Application Template
+    description: |-
+      Simple Subatomic Python 3.6 application template.
+      
+      NOTE: This Template contains no Service or Route resources and therefore not suited for web applications.
+    openshift.io/provider-display-name: Subatomic
+    openshift.io/documentation-url: http://subatomic.bison.ninja
+    openshift.io/support-url: http://subatomic.bison.ninja
+    subatomic/version: '2.0'
+    tags: java
+    iconClass: icon-spring
+labels:
+  template: subatomic-python-36-template
+objects:
+  - kind: ImageStream
+    apiVersion: v1
+    metadata:
+      name: ${APP_NAME}      
+  - apiVersion: v1
+    kind: DeploymentConfig
+    metadata:
+      labels:
+        template: subatomic-python-36-template
+      name: ${APP_NAME}
+    spec:
+      replicas: 1    
+      strategy:
+        type: Rolling    
+      triggers:
+        - imageChangeParams:
+            automatic: true
+            containerNames:
+              - ${APP_NAME}
+            from:
+              kind: ImageStreamTag
+              name: ${APP_NAME}:${IMAGE_STREAM_TAG}
+              namespace: ${IMAGE_STREAM_PROJECT}
+          type: ImageChange
+        - type: ConfigChange    
+      selector:
+        name: ${APP_NAME}      
+      template:
+        metadata:
+          labels:
+            name: ${APP_NAME}
+        spec:
+          containers:
+            - name: ${APP_NAME}
+              image: ' '
+              resources:
+                limits:
+                  cpu: ${LIMITS_CPU}
+                  memory: ${LIMITS_MEMORY}
+                requests:
+                  cpu: ${REQUESTS_CPU}
+                  memory: ${REQUESTS_MEMORY}               
+parameters:
+  - name: APP_NAME
+    displayName: Application name
+    required: true
+  - name: IMAGE_STREAM_PROJECT
+    displayName: OpenShift project
+    description: >-
+      The OpenShift project (namespace) where the application's ImageStream is located
+    required: true        
+  - name: IMAGE_STREAM_TAG
+    displayName: Image stream tag
+    value: latest
+    required: true
+  - name: REQUESTS_CPU
+    displayName: CPU resource request
+    required: false
+    value: '0'    
+  - name: REQUESTS_MEMORY
+    displayName: Memory resource request
+    required: true
+    value: 0Mi  
+  - name: LIMITS_CPU
+    displayName: CPU resource limit
+    required: true
+    value: '4'
+  - name: LIMITS_MEMORY
+    displayName: Memory resource limit
+    required: false
+    value: 1Gi
