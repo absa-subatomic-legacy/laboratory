@@ -60,7 +60,7 @@ objects:
                 - name: JAVA_MAX_CORE
                   value: ${LIMITS_CPU}
                 - name: JAVA_OPTIONS
-                  value: '-Djava.net.preferIPv4Stack=true -Djava.security.egd=file:/dev/./urandom -javaagent:/newrelic/newrelic.jar -Dnewrelic.config.file=/newrelic/newrelic.yml'
+                  value: '-Djava.net.preferIPv4Stack=true -Djava.security.egd=file:/dev/./urandom'
               ports:
                 - name: http-8080
                   containerPort: 8080
