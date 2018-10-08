@@ -45,8 +45,6 @@ RUN source scl_source enable rh-python36 && \
 #Add the subatomic cert
 ADD https://raw.githubusercontent.com/absa-subatomic/local-hadron-collider/master/minishift-addons/subatomic/certs/subatomic.ca.crt /etc/subatomic.ca.crt
 
-RUN git config --global http.sslCAInfo /etc/subatomic.ca.crt
-
 RUN yum install ca-certificates && \
     update-ca-trust force-enable && \
     cp /etc/subatomic.ca.crt /etc/pki/ca-trust/source/anchors/ && \
