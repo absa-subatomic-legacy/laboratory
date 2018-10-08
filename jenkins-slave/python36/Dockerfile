@@ -40,9 +40,9 @@ RUN source scl_source enable rh-python36 && \
     chmod -R g+rw $HOME
 
 # Add Subatomic trusted Root CA's
+
 ADD https://raw.githubusercontent.com/absa-subatomic/local-hadron-collider/master/minishift-addons/subatomic/certs/subatomic.ca.crt /etc/pki/ca-trust/source/anchors/subatomic-ca-chain.crt
-RUN chown 1001:0 /etc/pki/ca-trust/source/anchors/subatomic-ca-chain.crt && \
-    update-ca-trust
+RUN update-ca-trust
 
 USER 1001
 
