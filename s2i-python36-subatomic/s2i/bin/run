@@ -42,7 +42,6 @@ if [[ -f "$APP_SCRIPT" ]]; then
   if [[ "$APP_SCRIPT" != /* ]]; then
     APP_SCRIPT="./$APP_SCRIPT"
   fi
-  chmod u+x $APP_SCRIPT
   exec "$APP_SCRIPT"
 else
   test -n "$app_script_check" && (>&2 echo "ERROR: file '$app_script_check' not found.") && exit 1
