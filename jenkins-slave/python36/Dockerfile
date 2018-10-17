@@ -35,9 +35,10 @@ COPY contrib/bin/scl_enable /usr/local/bin/scl_enable
 #   writable as OpenShift default security model is to run the container
 #   under random UID.
 RUN source scl_source enable rh-python36 && \
-    virtualenv ${HOME}/venv && \
+    virtualenv /venv_home/venv && \
     chown -R 1001:0 $HOME && \
-    chmod -R g+rw $HOME
+    chmod -R g+rw $HOME && \
+    chmod -R g+rwx /venv_home/venv
     
 # Add Subatomic trusted Root CA's
 
@@ -46,12 +47,3 @@ ADD https://raw.githubusercontent.com/absa-subatomic/local-hadron-collider/maste
 RUN update-ca-trust
 
 USER 1001
-
-RUN source ${HOME}/venv/bin/activate
-
-# # Allow adding root CA certificates for custom builds
-# ONBUILD USER root
-# # Copying the Dockerfile prevents failing on non existent additional certificates (see https://goo.gl/EVBRMg)
-# ONBUILD ADD certs/* Dockerfile /etc/pki/ca-trust/source/anchors/
-# ONBUILD RUN update-ca-trust
-# ONBUILD USER 1001
