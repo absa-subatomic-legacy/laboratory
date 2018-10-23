@@ -30,6 +30,7 @@ objects:
         template: subatomic-spring-boot-2x-template
       name: ${APP_NAME}
     spec:
+      revisionHistoryLimit: 2
       replicas: 1    
       strategy:
         type: Rolling    
