@@ -78,7 +78,7 @@ RUN chmod 755 /deployments/run-java.sh
 
 # Necessary to permit running with a randomised UID
 RUN mkdir -p /deployments \
- && chmod -R "g+rwX" /deployment s
+ && chmod -R "g+rwX" /deployment
 
 # Use the run script as default since we are working as an hybrid image which can be
 # used directly to. (If we were a plain s2i image we would print the usage info here)
