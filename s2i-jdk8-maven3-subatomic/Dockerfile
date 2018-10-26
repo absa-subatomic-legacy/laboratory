@@ -26,7 +26,7 @@ RUN yum -y update && \
   yum clean all && \
   rm -rf /var/cache/yum
 
-ENV JAVA_HOME=/usr/lib/jvm/jre
+ENV JAVA_HOME=/usr/lib/jvm/jdk
 RUN echo $JAVA_HOME
 ENV PATH=$JAVA_HOME/bin:$PATH
 
