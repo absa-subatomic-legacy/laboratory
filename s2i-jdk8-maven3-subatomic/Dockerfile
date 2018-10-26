@@ -26,9 +26,10 @@ RUN yum -y update && \
   yum clean all && \
   rm -rf /var/cache/yum
 
-ENV JAVA_HOME=/usr/lib/jvm
+ENV JAVA_HOME_BASE=/usr/lib/jvm
+ENV JAVA_HOME=${JAVA_HOME_BASE}/java/bin
 RUN echo $JAVA_HOME
-ENV PATH=$JAVA_HOME/java/bin:$PATH
+ENV PATH=$JAVA_HOME:$PATH
 
 ENV MAVEN_VERSION 3.5.3
 RUN curl -fsSL https://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar xzf - -C /usr/share \
@@ -91,7 +92,7 @@ ADD https://raw.githubusercontent.com/absa-subatomic/local-hadron-collider/maste
 RUN keytool -importcert \
   -file /etc/ca.cert.pem \
   -alias subatomic.local \
-  -keystore $JAVA_HOME/jre/lib/security/cacerts \
+  -keystore $JAVA_HOME_BASE/jre/lib/security/cacerts \
   -storepass changeit \
   -noprompt
 
