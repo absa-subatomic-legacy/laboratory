@@ -20,7 +20,7 @@ LABEL io.k8s.description="Subatomic S2I for building and running Java applicatio
 ENV JAVA_VERSION=1.8.0_191
 
 RUN yum -y update && \
-  yum -y install wget java-1.8.0-openjdk && \
+  yum -y install wget java-1.8.0-openjdk-devel && \
 
   source /etc/environment && \
   yum clean all && \
@@ -28,7 +28,7 @@ RUN yum -y update && \
 
 ENV JAVA_HOME=/usr/lib/jvm
 RUN echo $JAVA_HOME
-ENV PATH=$JAVA_HOME/jdk/bin:$PATH
+ENV PATH=$JAVA_HOME/java/bin:$PATH
 
 ENV MAVEN_VERSION 3.5.3
 RUN curl -fsSL https://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar xzf - -C /usr/share \
@@ -78,7 +78,7 @@ RUN chmod 755 /deployments/run-java.sh
 
 # Necessary to permit running with a randomised UID
 RUN mkdir -p /deployments \
- && chmod -R "g+rwX" /deployments
+ && chmod -R "g+rwX" /deployment s
 
 # Use the run script as default since we are working as an hybrid image which can be
 # used directly to. (If we were a plain s2i image we would print the usage info here)
