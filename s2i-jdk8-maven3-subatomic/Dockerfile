@@ -27,7 +27,7 @@ RUN yum -y update && \
   rm -rf /var/cache/yum
 
 ENV JAVA_HOME_BASE=/usr/lib/jvm
-ENV JAVA_HOME=${JAVA_HOME_BASE}/java/bin
+ENV JAVA_HOME=${JAVA_HOME_BASE}/java
 RUN echo $JAVA_HOME
 ENV PATH=$JAVA_HOME:$PATH
 
