@@ -73,9 +73,9 @@ objects:
               - name: JENKINS_ADMIN_EMAIL
                 value: ${JENKINS_ADMIN_EMAIL}                
               - name: MAVEN_SLAVE_IMAGE
-                value: ${MAVEN_SLAVE_IMAGE}                
+                value: "${DEVOPS_URL}/${MAVEN_SLAVE_IMAGE}"                
               - name: NODEJS_SLAVE_IMAGE
-                value: ${NODEJS_SLAVE_IMAGE}                
+                value: "${DEVOPS_URL}/${NODEJS_SLAVE_IMAGE}"           
               - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
                 value: 'true'
               - name: KUBERNETES_MASTER
@@ -188,11 +188,13 @@ parameters:
 - description: This Jenkins slave image can be used to build Maven based projects
   displayName: The Subatomic Maven slave image
   name: MAVEN_SLAVE_IMAGE
-  required: true
+  required: false
+  value: jenkins-slave-maven-subatomic:2.0
 - description: This Jenkins slave image can be used to build Node based projects
   displayName: The Subatomic Node slave image
   name: NODEJS_SLAVE_IMAGE
   required: false
+  value: jenkins-slave-nodejs-subatomic:2.0
 - description: Maximum amount of memory the container can use.
   displayName: Memory Limit
   name: MEMORY_LIMIT
@@ -209,3 +211,7 @@ parameters:
   displayName: Jenkins ImageStreamTag
   name: JENKINS_IMAGE_STREAM_TAG
   value: jenkins-subatomic:2.1
+- description: Url to the devops environment which holds the slave images
+  displayName: Devops Url
+  name: DEVOPS_URL
+  required: true
