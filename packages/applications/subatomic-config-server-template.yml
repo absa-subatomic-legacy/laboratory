@@ -25,6 +25,7 @@ objects:
         template: subatomic-config-server-template
       name: subatomic-config-server
     spec:
+      revisionHistoryLimit: 2
       replicas: 1    
       strategy:
         type: Rolling    

@@ -27,6 +27,7 @@ objects:
         template: subatomic-nodejs-template
       name: '${APP_NAME}'
     spec:
+      revisionHistoryLimit: 2
       replicas: 1
       selector:
         name: '${APP_NAME}'
