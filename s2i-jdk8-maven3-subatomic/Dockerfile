@@ -17,28 +17,19 @@ LABEL io.k8s.description="Subatomic S2I for building and running Java applicatio
       subatomic-version="2.0" \
       author="Subatomic <https://github.com/absa-subatomic>"
 
-ENV UPDATE_VERSION=8u181
-ENV JAVA_VERSION=1.8.0_181
-ENV BUILD=b13
-ENV HASH 96a7b8442fe848ef90c96a2fad6ed6d1
+ENV JAVA_VERSION=1.8.0_191
+
 RUN yum -y update && \
-  yum -y install wget && \
-  wget -c --no-cookies --no-check-certificate \
-  --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
-    "http://download.oracle.com/otn-pub/java/jdk/${UPDATE_VERSION}-${BUILD}/${HASH}/jdk-${UPDATE_VERSION}-linux-x64.rpm" \
-  --output-document="jdk-${UPDATE_VERSION}-linux-x64.rpm" && \
-  rpm -i jdk-${UPDATE_VERSION}-linux-x64.rpm && \
-  alternatives --install /usr/bin/java java /usr/java/jdk${JAVA_VERSION}/bin/java 1 && \
-  alternatives --set java /usr/java/jdk${JAVA_VERSION}/bin/java && \
-  export JAVA_HOME=/usr/java/jdk${JAVA_VERSION}/ && \
-  echo "export JAVA_HOME=/usr/java/jdk${JAVA_VERSION}/" | tee /etc/environment && \
+  yum -y install wget java-1.8.0-openjdk-devel && \
+
   source /etc/environment && \
-  rm jdk-${UPDATE_VERSION}-linux-x64.rpm && \
   yum clean all && \
   rm -rf /var/cache/yum
-ENV JAVA_HOME=/usr/java/jdk${JAVA_VERSION}-amd64
+
+ENV JAVA_HOME_BASE=/usr/lib/jvm
+ENV JAVA_HOME=${JAVA_HOME_BASE}/java
 RUN echo $JAVA_HOME
-ENV PATH=$JAVA_HOME/bin:$PATH
+ENV PATH=$JAVA_HOME:$PATH
 
 ENV MAVEN_VERSION 3.5.3
 RUN curl -fsSL https://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar xzf - -C /usr/share \
@@ -101,7 +92,7 @@ ADD https://raw.githubusercontent.com/absa-subatomic/local-hadron-collider/maste
 RUN keytool -importcert \
   -file /etc/ca.cert.pem \
   -alias subatomic.local \
-  -keystore $JAVA_HOME/jre/lib/security/cacerts \
+  -keystore $JAVA_HOME_BASE/jre/lib/security/cacerts \
   -storepass changeit \
   -noprompt
 
