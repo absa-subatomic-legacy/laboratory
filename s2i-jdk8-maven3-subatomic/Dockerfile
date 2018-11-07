@@ -17,8 +17,6 @@ LABEL io.k8s.description="Subatomic S2I for building and running Java applicatio
       subatomic-version="2.0" \
       author="Subatomic <https://github.com/absa-subatomic>"
 
-ENV JAVA_VERSION=1.8.0_191
-
 RUN yum -y update && \
   yum -y install wget java-1.8.0-openjdk-devel && \
 
@@ -31,7 +29,7 @@ ENV JAVA_HOME=${JAVA_HOME_BASE}/java
 RUN echo $JAVA_HOME
 ENV PATH=$JAVA_HOME:$PATH
 
-ENV MAVEN_VERSION 3.5.3
+ENV MAVEN_VERSION 3.5.4
 RUN curl -fsSL https://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar xzf - -C /usr/share \
   && mv /usr/share/apache-maven-$MAVEN_VERSION /usr/share/maven \
   && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
@@ -42,14 +40,14 @@ COPY settings.xml ${GLOBAL_MAVEN_SETTINGS}/settings.xml
 ENV MAVEN_USER_HOME /tmp
 # ===
 
-# Java S2I. See https://github.com/fabric8io-images/s2i/tree/master/java/images/rhel
+# Java S2I. See https://github.com/fabric8io-images/s2i/tree/v2.3.1/java/images/rhel
 # === 
 # Prometheus JMX exporter agent
  RUN mkdir -p /opt/prometheus/etc \
-  && curl http://central.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.10/jmx_prometheus_javaagent-0.10.jar \
+  && curl -sSL http://central.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.3.1/jmx_prometheus_javaagent-0.3.1.jar \
           -o /opt/prometheus/jmx_prometheus_javaagent.jar
- ADD prometheus-opts /opt/prometheus/prometheus-opts
- ADD prometheus-config.yml /opt/prometheus/prometheus-config.yml
+ RUN curl -sSL https://raw.githubusercontent.com/fabric8io-images/s2i/v2.3.1/java/images/rhel/prometheus-opts -o /opt/prometheus/prometheus-opts && \
+  curl -sSL https://raw.githubusercontent.com/fabric8io-images/s2i/v2.3.1/java/images/rhel/prometheus-config.yml -o /opt/prometheus/prometheus-config.yml
  RUN chmod 444 /opt/prometheus/jmx_prometheus_javaagent.jar \
   && chmod 444 /opt/prometheus/prometheus-config.yml \
   && chmod 755 /opt/prometheus/prometheus-opts \
@@ -60,9 +58,9 @@ EXPOSE 9779
 
 # Jolokia agent
 RUN mkdir -p /opt/jolokia/etc \
- && curl https://maven.repository.redhat.com/ga/org/jolokia/jolokia-jvm/1.4.0.redhat-1/jolokia-jvm-1.4.0.redhat-1-agent.jar \
+ && curl -sSL https://maven.repository.redhat.com/ga/org/jolokia/jolokia-jvm/1.5.0.redhat-1/jolokia-jvm-1.5.0.redhat-1-agent.jar \
          -o /opt/jolokia/jolokia.jar
-ADD jolokia-opts /opt/jolokia/jolokia-opts
+RUN curl -sSL https://raw.githubusercontent.com/fabric8io-images/s2i/v2.3.1/java/images/rhel/jolokia-opts -o /opt/jolokia/jolokia-opts
 RUN chmod 444 /opt/jolokia/jolokia.jar \
  && chmod 755 /opt/jolokia/jolokia-opts \
  && chmod 775 /opt/jolokia/etc \
@@ -78,7 +76,7 @@ COPY run-java.sh /deployments/
 RUN chmod 755 /deployments/run-java.sh
 
 # Necessary to permit running with a randomised UID
-RUN mkdir -p /deployments \
+RUN mkdir -p /deployments \ 
  && chmod -R "g+rwX" /deployments
 
 # Use the run script as default since we are working as an hybrid image which can be
@@ -101,11 +99,3 @@ ADD logback.xml /maven/config/logback.xml
 VOLUME /tmp
 
 USER 1001
-
-# # Allow adding root CA certificates for custom builds
-# ONBUILD USER root
-# # Copying the Dockerfile prevents failing on non existent additional certificates (see https://goo.gl/EVBRMg)
-# ONBUILD ADD certs/* Dockerfile /etc/pki/ca-trust/source/anchors/
-# ONBUILD RUN update-ca-trust
-# ONBUILD USER 1001
-# # ===

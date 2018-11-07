@@ -12,12 +12,13 @@ ENV GLOBAL_MAVEN_SETTINGS /opt/rh/rh-maven33/root/usr/share/maven/conf
 COPY settings.xml ${GLOBAL_MAVEN_SETTINGS}/settings.xml
 # Thanks to https://www.lewuathe.com/maven-wrapper-home.html
 ENV MAVEN_USER_HOME /tmp
+RUN chmod a+r ${GLOBAL_MAVEN_SETTINGS}/settings.xml
+
+# Upgrade Git and Maven
+RUN rpm -Uvh http://repo.iotti.biz/CentOS/5/noarch/lux-release-0-1.noarch.rpm && \
+  rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-LUX && \
+  yum -y install git rh-maven35 && \
+  yum clean all && \
+  rm -rf /var/cache/yum
 
 USER 1001
-
-# # Allow adding root CA certificates for custom builds
-# ONBUILD USER root
-# # Copying the Dockerfile prevents failing on non existent additional certificates (see https://goo.gl/EVBRMg)
-# ONBUILD ADD certs/* Dockerfile /etc/pki/ca-trust/source/anchors/
-# ONBUILD RUN update-ca-trust
-# ONBUILD USER 1001

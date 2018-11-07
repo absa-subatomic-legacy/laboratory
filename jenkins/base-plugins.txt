@@ -1,6 +1,7 @@
 # OpenShift plugins - https://github.com/openshift/jenkins-client-plugin
 openshift-pipeline:1.0.55
 openshift-login:1.0.9
+#openshift-login:1.0.10 - DO NOT upgrade. Causes NPE in org.openshift.jenkins.plugins.openshiftlogin.OpenShiftOAuth2SecurityRealm.postSAR(OpenShiftOAuth2SecurityRealm.java:606
 openshift-client:1.0.21
 openshift-sync:1.0.29
 
@@ -34,7 +35,7 @@ mapdb-api:1.0.9.0
 credentials:2.1.18
 git:3.9.1
 job-dsl:1.70
-jira:3.0.4
+jira:3.0.5
 cloudbees-folder:6.5.1
 pipeline-stage-view:2.10
 pipeline-stage-step:2.3
@@ -47,7 +48,7 @@ durable-task:1.27
 github-api:1.92
 github-branch-source:2.4.1
 github:1.29.3
-jackson2-api:2.8.11.3
+jackson2-api:2.9.7.1
 ace-editor:1.1
 handlebars:1.1.1
 momentjs:1.1.1
@@ -80,4 +81,3 @@ scm-api:2.3.0
 sse-gateway:1.16
 ssh-credentials:1.14
 docker-workflow:1.17
-jacoco:3.0.4
