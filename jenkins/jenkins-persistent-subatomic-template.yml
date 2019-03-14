@@ -73,9 +73,9 @@ objects:
               - name: JENKINS_ADMIN_EMAIL
                 value: ${JENKINS_ADMIN_EMAIL}                
               - name: MAVEN_SLAVE_IMAGE
-                value: "${DEVOPS_URL}/${MAVEN_SLAVE_IMAGE}"                
+                value: "${NAMESPACE_URL}/${MAVEN_SLAVE_IMAGE}"                
               - name: NODEJS_SLAVE_IMAGE
-                value: "${DEVOPS_URL}/${NODEJS_SLAVE_IMAGE}"           
+                value: "${NAMESPACE_URL}/${NODEJS_SLAVE_IMAGE}"           
               - name: OPENSHIFT_ENABLE_REDIRECT_PROMPT
                 value: 'true'
               - name: KUBERNETES_MASTER
@@ -211,7 +211,7 @@ parameters:
   displayName: Jenkins ImageStreamTag
   name: JENKINS_IMAGE_STREAM_TAG
   value: jenkins-subatomic:2.1
-- description: Url to the devops environment which holds the slave images
-  displayName: Devops Url
-  name: DEVOPS_URL
+- description: Docker registry url to the namespace holding the jenkins images
+  displayName: Namespace Url
+  name: NAMESPACE_URL
   required: true
