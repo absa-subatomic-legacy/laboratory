@@ -1,0 +1,118 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: subatomic-dotnet-core-22-template
+  labels:
+    usage: "subatomic-app"
+  annotations:
+    openshift.io/display-name: Subatomic Application 2 Template
+    description: |-
+      Simple Subatomic .net core 2.2 application template.
+      
+      NOTE: This Template contains no Service or Route resources and therefore not suited for web applications.
+    openshift.io/provider-display-name: Subatomic
+    openshift.io/documentation-url: http://subatomic.bison.ninja
+    openshift.io/support-url: http://subatomic.bison.ninja
+    subatomic/version: '2.0'
+    tags: .net
+    iconClass: icon-dotnet
+labels:
+  template: subatomic-dotnet-core-22-template
+objects:
+  - kind: ImageStream
+    apiVersion: v1
+    metadata:
+      name: ${APP_NAME}      
+  - apiVersion: v1
+    kind: DeploymentConfig
+    metadata:
+      labels:
+        template: subatomic-dotnet-core-22-template
+      name: ${APP_NAME}
+    spec:
+      revisionHistoryLimit: 2
+      replicas: 1    
+      strategy:
+        type: Rolling    
+      triggers:
+        - imageChangeParams:
+            automatic: true
+            containerNames:
+              - ${APP_NAME}
+            from:
+              kind: ImageStreamTag
+              name: ${APP_NAME}:${IMAGE_STREAM_TAG}
+              namespace: ${IMAGE_STREAM_PROJECT}
+          type: ImageChange
+        - type: ConfigChange    
+      selector:
+        name: ${APP_NAME}      
+      template:
+        metadata:
+          labels:
+            name: ${APP_NAME}
+        spec:
+          containers:
+            - name: ${APP_NAME}
+              image: ' '
+              env:
+                - name: dotnet-core_CLOUD_CONFIG_URI
+                  value: "http://subatomic-config-server.${DEVOPS_NAMESPACE}.svc.cluster.local"
+              ports:
+                - name: http-8080
+                  containerPort: 8080
+                  protocol: TCP
+              resources:
+                limits:
+                  cpu: ${LIMITS_CPU}
+                  memory: ${LIMITS_MEMORY}
+                requests:
+                  cpu: ${REQUESTS_CPU}
+                  memory: ${REQUESTS_MEMORY}   
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        app: '${APP_NAME}'
+        template: subatomic-dotnet-core-22-template
+      name: '${APP_NAME}'
+    spec:
+      ports:
+        - name: web
+          port: 8080
+          protocol: TCP
+          targetPort: http-8080
+      selector:
+        name: '${APP_NAME}'                
+parameters:
+  - name: APP_NAME
+    displayName: Application name
+    required: true
+  - name: DEVOPS_NAMESPACE
+    displayName: DevOps Namespace
+    required: true
+  - name: IMAGE_STREAM_PROJECT
+    displayName: OpenShift project
+    description: >-
+      The OpenShift project (namespace) where the application's ImageStream is located
+    required: true        
+  - name: IMAGE_STREAM_TAG
+    displayName: Image stream tag
+    value: latest
+    required: true         
+  - name: REQUESTS_CPU
+    displayName: CPU resource request
+    required: false
+    value: '0'    
+  - name: REQUESTS_MEMORY
+    displayName: Memory resource request
+    required: true
+    value: 0Mi  
+  - name: LIMITS_CPU
+    displayName: CPU resource limit
+    required: true
+    value: '4'
+  - name: LIMITS_MEMORY
+    displayName: Memory resource limit
+    required: false
+    value: 1Gi
