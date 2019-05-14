@@ -1,4 +1,4 @@
-# Subatomic Java Maven S2I image
+# Subatomic .Net Core S2I image
 
 This S2I image is based off the [Red Hat .NET Core S2I image](https://github.com/redhat-developer/s2i-dotnetcore).
 
