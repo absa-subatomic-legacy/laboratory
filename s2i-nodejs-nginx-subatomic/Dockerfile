@@ -37,8 +37,8 @@ RUN yum install -y centos-release-scl-rh && \
 # Don't install Cypress - we won't run tests for S2I
 ENV CYPRESS_SKIP_BINARY_INSTALL=1
 
-RUN curl -s -L -O https://github.com/sass/node-sass/releases/download/v4.9.0/linux-x64-57_binding.node
-ENV SASS_BINARY_PATH=/opt/app-root/src/linux-x64-57_binding.node    
+RUN curl -s -L -O https://github.com/sass/node-sass/releases/download/v4.12.0/linux-x64-72_binding.node
+ENV SASS_BINARY_PATH=/opt/app-root/src/linux-x64-72_binding.node   
 
 # Add S2I nginx custom files
 ADD contrib/nginx.default.conf /etc/opt/rh/rh-nginx112/nginx/nginx.conf
