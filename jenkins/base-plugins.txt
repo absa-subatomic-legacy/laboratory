@@ -71,7 +71,7 @@ git-client:2.7.3
 jsch:0.1.54.2
 junit:1.26.1
 structs:1.19
-branch-api:2.0.20
+branch-api:2.0.21
 pipeline-rest-api:2.10
 htmlpublisher:1.17
 mailer:1.22
