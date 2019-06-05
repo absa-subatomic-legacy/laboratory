@@ -16,7 +16,7 @@ blueocean-display-url:2.3.0
 workflow-api:2.27
 workflow-aggregator:2.5
 workflow-scm-step:2.7
-workflow-job:2.25
+workflow-job:2.32
 workflow-cps:2.57
 workflow-multibranch:2.20
 workflow-cps-global-lib:2.12
@@ -48,7 +48,7 @@ durable-task:1.27
 github-api:1.92
 github-branch-source:2.4.1
 github:1.29.3
-jackson2-api:2.9.7.1
+jackson2-api:2.9.8
 ace-editor:1.1
 handlebars:1.1.1
 momentjs:1.1.1
