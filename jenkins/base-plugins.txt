@@ -78,6 +78,6 @@ mailer:1.22
 favorite:2.3.2
 pipeline-graph-analysis:1.7
 scm-api:2.4.1
-sse-gateway:1.16
+sse-gateway:1.17
 ssh-credentials:1.14
 docker-workflow:1.17
