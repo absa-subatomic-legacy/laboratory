@@ -3,7 +3,7 @@ openshift-pipeline:1.0.55
 openshift-login:1.0.9
 #openshift-login:1.0.10 - DO NOT upgrade. Causes NPE in org.openshift.jenkins.plugins.openshiftlogin.OpenShiftOAuth2SecurityRealm.postSAR(OpenShiftOAuth2SecurityRealm.java:606
 openshift-client:1.0.21
-openshift-sync:1.0.29
+openshift-sync:1.0.37
 
 # kubernetes plugin - https://wiki.jenkins-ci.org/display/JENKINS/Kubernetes+Plugin
 kubernetes:1.8.4
