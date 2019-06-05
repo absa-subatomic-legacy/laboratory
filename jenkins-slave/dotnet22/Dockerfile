@@ -1,5 +1,5 @@
 # Based on https://github.com/redhat-developer/dotnet-jenkins-slave
-FROM openshift/jenkins-slave-base-centos7
+FROM openshift/jenkins-slave-base-centos7:v3.11
 
 # Labels consumed by Red Hat build service
 LABEL com.redhat.component="rh-dotnet22-jenkins-slave-docker" \
