@@ -9,9 +9,9 @@ openshift-sync:1.0.29
 kubernetes:1.8.4
 kubernetes-credentials:0.4.0
 
-blueocean:1.5.4
-blueocean-autofavorite:1.2.2
-blueocean-display-url:2.2.0
+blueocean:1.16.0
+blueocean-autofavorite:1.2.4
+blueocean-display-url:2.3.0
 
 workflow-api:2.27
 workflow-aggregator:2.5
