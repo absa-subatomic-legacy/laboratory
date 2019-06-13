@@ -1,4 +1,4 @@
-FROM openshift/jenkins-2-centos7:v3.11
+FROM openshift/jenkins-2-centos7:v4.0
 
 LABEL subatomic-version="2.1"
 
