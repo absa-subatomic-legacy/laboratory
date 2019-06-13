@@ -1,5 +1,5 @@
 # See https://github.com/absa-subatomic/laboratory/issues/19
-FROM openshift/jenkins-slave-base-centos7:v3.9
+FROM openshift/jenkins-slave-base-centos7:v3.11
 
 LABEL subatomic-version="2.0" \
         role=jenkins-slave

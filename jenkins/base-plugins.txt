@@ -1,29 +1,28 @@
 # OpenShift plugins - https://github.com/openshift/jenkins-client-plugin
 openshift-pipeline:1.0.55
-openshift-login:1.0.9
-#openshift-login:1.0.10 - DO NOT upgrade. Causes NPE in org.openshift.jenkins.plugins.openshiftlogin.OpenShiftOAuth2SecurityRealm.postSAR(OpenShiftOAuth2SecurityRealm.java:606
+openshift-login:1.0.18
 openshift-client:1.0.21
-openshift-sync:1.0.29
+openshift-sync:1.0.37
 
 # kubernetes plugin - https://wiki.jenkins-ci.org/display/JENKINS/Kubernetes+Plugin
 kubernetes:1.8.4
 kubernetes-credentials:0.4.0
 
-blueocean:1.5.4
-blueocean-autofavorite:1.2.2
-blueocean-display-url:2.2.0
+blueocean:1.16.0
+blueocean-autofavorite:1.2.4
+blueocean-display-url:2.3.0
 
 workflow-api:2.27
 workflow-aggregator:2.5
 workflow-scm-step:2.7
-workflow-job:2.25
-workflow-cps:2.57
-workflow-multibranch:2.20
+workflow-job:2.32
+workflow-cps:2.58
+workflow-multibranch:2.21
 workflow-cps-global-lib:2.12
-workflow-durable-task-step:2.22
-workflow-support:2.20
+workflow-durable-task-step:2.26
+workflow-support:3.2
 workflow-remote-loader:1.4
-workflow-step-api:2.16
+workflow-step-api:2.19
 # Cannot upgrade to workflow-api:2.28 must have +2.121
 workflow-basic-steps:2.8.2
 
@@ -36,7 +35,7 @@ credentials:2.1.18
 git:3.9.1
 job-dsl:1.70
 jira:3.0.5
-cloudbees-folder:6.5.1
+cloudbees-folder:6.6
 pipeline-stage-view:2.10
 pipeline-stage-step:2.3
 apache-httpcomponents-client-4-api:4.5.5-3.0
@@ -48,7 +47,7 @@ durable-task:1.27
 github-api:1.92
 github-branch-source:2.4.1
 github:1.29.3
-jackson2-api:2.9.7.1
+jackson2-api:2.9.8
 ace-editor:1.1
 handlebars:1.1.1
 momentjs:1.1.1
@@ -62,7 +61,7 @@ pipeline-model-api:1.3.2
 pipeline-stage-tags-metadata:1.3.2
 plain-credentials:1.4
 run-condition:1.2
-script-security:1.48
+script-security:1.58
 subversion:2.12.1
 token-macro:2.5
 maven-plugin:3.1.2
@@ -70,14 +69,14 @@ javadoc:1.4
 git-client:2.7.3
 jsch:0.1.54.2
 junit:1.26.1
-structs:1.17
-branch-api:2.0.20
+structs:1.19
+branch-api:2.0.21
 pipeline-rest-api:2.10
 htmlpublisher:1.17
 mailer:1.22
 favorite:2.3.2
 pipeline-graph-analysis:1.7
-scm-api:2.3.0
-sse-gateway:1.16
+scm-api:2.4.1
+sse-gateway:1.17
 ssh-credentials:1.14
 docker-workflow:1.17
